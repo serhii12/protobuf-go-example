@@ -7,14 +7,50 @@ import (
 
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
+	complexpb "github.com/serhii12/protobuf-go-example/src/complex"
+	enumpb "github.com/serhii12/protobuf-go-example/src/enum_example"
 	simplepb "github.com/serhii12/protobuf-go-example/src/simple"
 )
 
 func main() {
-	sm := doSimple()
+	// sm := doSimple()
 
 	// readAndWrite(sm)
-	jsonDemo(sm)
+	// jsonDemo(sm)
+	// doEnum()
+	doComplex()
+}
+
+func doComplex() {
+	cm := complexpb.ComplexMessage{
+		OneDummy: &complexpb.DummyMessage{
+			Id:   1,
+			Name: "First message",
+		},
+		MultipleDummy: []*complexpb.DummyMessage{
+			&complexpb.DummyMessage{
+				Id:   2,
+				Name: "Second message",
+			},
+			&complexpb.DummyMessage{
+				Id:   3,
+				Name: "Third message",
+			},
+		},
+	}
+
+	fmt.Println(cm)
+}
+
+func doEnum() {
+	em := enumpb.EnumMessage{
+		Id:           42,
+		DayOfTheWeek: enumpb.DayOfTheWeek_FRIDAY,
+	}
+
+	em.DayOfTheWeek = enumpb.DayOfTheWeek_MONDAY
+
+	fmt.Println(em)
 }
 
 func jsonDemo(sm proto.Message) {
